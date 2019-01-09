@@ -24,6 +24,7 @@ namespace NorthwindInventory.ViewModel
 			GoToProductsPageCommand = new RelayCommand(GoToProductsPage);
 			GoToOrdersPageCommand = new RelayCommand(GoToOrdersPage);
 			GoToReportsPageCommand = new RelayCommand(GoToReportsPage);
+			GoToEmployeesPageCommand = new RelayCommand(GoToEmployeesPage);
 
 
 			//Messenger section
@@ -131,6 +132,16 @@ namespace NorthwindInventory.ViewModel
 			set => Set(ref _reportsPage, value);
 		}
 
+		/// <summary>
+		/// The text shown to navigate to the employees page.
+		/// </summary>
+		private string _employeesPage = "Employees";
+		public string EmployeesPage
+		{
+			get => _employeesPage;
+			set => Set(ref _employeesPage, value);
+		}
+
 		#endregion
 
 		#region Commands
@@ -215,6 +226,16 @@ namespace NorthwindInventory.ViewModel
 		{
 			NavigationService.NavigateWithReturn(NavigationService.GetCurrentPage(), PageType.ReportsPage);
 		}
+
+		/// <summary>
+		/// The command to navigate to the employees page.
+		/// </summary>
+		public RelayCommand GoToEmployeesPageCommand { get; set; }
+		private void GoToEmployeesPage()
+		{
+			NavigationService.NavigateWithReturn(NavigationService.GetCurrentPage(), PageType.EmployeesPage);
+		}
+
 		#endregion
 
 		#region Messaging

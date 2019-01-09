@@ -12,7 +12,7 @@
 		ShippersPage,
 		OrdersPage,
 		ProductsPage,
-		EmployersPage,
+		EmployeesPage,
 		ConnectedUserPage,
 		SettingsPage,
 		ReportsPage

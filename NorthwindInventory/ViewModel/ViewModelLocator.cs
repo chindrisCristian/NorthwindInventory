@@ -30,6 +30,7 @@ namespace NorthwindInventory.ViewModel
 			SimpleIoc.Default.Register<ProductsViewModel>();
 			SimpleIoc.Default.Register<OrdersViewModel>();
 			SimpleIoc.Default.Register<ReportsViewModel>();
+			SimpleIoc.Default.Register<EmployeesViewModel>();
         }
 
 		//The viewmodel getters.
@@ -54,6 +55,8 @@ namespace NorthwindInventory.ViewModel
 		public OrdersViewModel Orders => ServiceLocator.Current.GetInstance<OrdersViewModel>();
 
 		public ReportsViewModel Reports => ServiceLocator.Current.GetInstance<ReportsViewModel>();
+
+		public EmployeesViewModel Employees => ServiceLocator.Current.GetInstance<EmployeesViewModel>();
 
 		public static void Cleanup()
         {

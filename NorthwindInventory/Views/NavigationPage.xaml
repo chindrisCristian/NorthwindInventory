@@ -7,7 +7,7 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="1000" d:DesignWidth="800"
              DataContext="{Binding Navigation, Source={StaticResource Locator}}">
 
     <UserControl.Resources>
@@ -160,9 +160,22 @@
 
                 </Button>
 
+                <Button Margin="10 0 10 10"
+                Command="{Binding GoToEmployeesPageCommand}"
+                    VerticalAlignment="Bottom">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="NaturePeople"/>
+                            <TextBlock Text="{Binding EmployeesPage}"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
                 <Separator/>
 
-                <Button Margin="10 0 10 10"
+                <Button Margin="10"
                 Command="{Binding GoToSettingsPageCommand}"
                     VerticalAlignment="Bottom">
 
