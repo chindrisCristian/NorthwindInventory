@@ -1,0 +1,221 @@
+﻿<UserControl x:Class="NorthwindInventory.Views.CustomersPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converter="clr-namespace:NorthwindInventory.Helpers"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             Dialog:DialogParticipation.Register="{Binding}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding Customers, Source={StaticResource Locator}}">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
+
+        <!--#region Options page-->
+
+        <Frame Content="{Binding Options, Converter={converter:EnumToUserControlConverter}}"
+               Margin="10"/>
+
+        <!--#endregion-->
+        
+        <!--#region Customers view-->
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1">
+            <DataGrid ItemsSource="{Binding Customers}"
+                      Style="{DynamicResource AzureDataGrid}"
+                      SelectedItem="{Binding SelectedCustomer}"
+                      GridLinesVisibility="All"
+                      IsReadOnly="True"
+                      Width="Auto"
+                      HorizontalGridLinesBrush="{DynamicResource TextBrush}"
+                      VerticalGridLinesBrush="{DynamicResource TextBrush}"/>
+
+            <StackPanel Orientation="Vertical"
+                        Visibility="{Binding AreCustomerOrdersVisible, Converter={converter:BoolToVisibilityEnumConverter}}"
+                        Margin="30 0 0 0">
+
+                <TextBlock Style="{StaticResource SubTitleTextBlock}"
+                           Text="Orders"
+                           Margin="0 0 0 10"/>
+
+                <Controls:SplitButton ItemsSource="{Binding CustomerOrders}"
+                          SelectedItem="{Binding SelectedOrder}"
+                          DisplayMemberPath="OrderID"
+                          ToolTip="The id of each order."
+                                      Icon="{iconPacks:Material Kind=Widgets}"/>
+
+            </StackPanel>
+
+        </StackPanel>    
+            
+        <!--#endregion-->
+        
+        <!--#region About one's orders-->
+
+        <ScrollViewer Grid.Row="2">
+            
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--#region Order details-->
+                <StackPanel Grid.Column="0"
+                    Orientation="Vertical">
+
+                    <TextBlock Text="Order details"
+                       Style="{StaticResource SubTitleTextBlock}"
+                       Margin="0 10 0 20"/>
+
+                    <DataGrid ItemsSource="{Binding OrderDetails}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="All"
+                      HorizontalGridLinesBrush="{DynamicResource TextBrush}"
+                      VerticalGridLinesBrush="{DynamicResource TextBrush}"
+                      Style="{DynamicResource AzureDataGrid}"
+                      IsReadOnly="True">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Order ID"
+                                        Binding="{Binding OrderID}"/>
+                            <DataGridTextColumn Header="Product Name"
+                                        Binding="{Binding ProductName}"/>
+                            <DataGridTextColumn Header="Category Name"
+                                        Binding="{Binding CategoryName}"/>
+                            <DataGridTextColumn Header="Unit price"
+                                        Binding="{Binding UnitPrice}"/>
+                            <DataGridTextColumn Header="Discount"
+                                        Binding="{Binding Discount}"/>
+                            <DataGridTextColumn Header="Quantity"
+                                        Binding="{Binding Quantity}"/>
+                            <DataGridTextColumn Header="Total price"
+                                        Binding="{Binding TotalPrice}"/>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </StackPanel>
+                <!--#endregion-->
+
+                <StackPanel Grid.Column="1"
+                        Orientation="Vertical"
+                        Visibility="{Binding AreCustomerOrdersVisible, Converter={converter:BoolToVisibilityEnumConverter}}"
+                        Margin="10 0 0 0">
+
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type DockPanel}">
+                            <Setter Property="Margin" Value="10 5"/>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <DockPanel>
+                        <TextBlock Text="Order ID:"
+                               DockPanel.Dock="Left"/>
+                        <TextBlock Text="{Binding SelectedOrder.OrderID}"
+                               DockPanel.Dock="Right"
+                               Margin="5 0 0 0"/>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock Text="Customer company:"
+                               DockPanel.Dock="Left"/>
+                        <TextBlock Text="{Binding SelectedOrder.CustomerCompany}"
+                               DockPanel.Dock="Right"
+                               Margin="5 0 0 0"/>
+
+                        <DockPanel.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="CustomerID: "/>
+                                <TextBlock Text="{Binding SelectedOrder.CustomerID}"/>
+                            </StackPanel>
+                        </DockPanel.ToolTip>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock Text="Employee name:"
+                               DockPanel.Dock="Left"/>
+                        <TextBlock Text="{Binding SelectedOrder.EmployeeName}"
+                               DockPanel.Dock="Right"
+                               Margin="5 0 0 0"/>
+
+                        <DockPanel.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="EmployeeID: "/>
+                                <TextBlock Text="{Binding SelectedOrder.EmployeeID}"/>
+                            </StackPanel>
+                        </DockPanel.ToolTip>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock Text="Shipper company:"
+                               DockPanel.Dock="Left"/>
+                        <TextBlock Text="{Binding SelectedOrder.ShipperCompany}"
+                               DockPanel.Dock="Right"
+                               Margin="5 0 0 0"/>
+
+                        <DockPanel.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ShipperID: "/>
+                                <TextBlock Text="{Binding SelectedOrder.ShipperID}"/>
+                            </StackPanel>
+                        </DockPanel.ToolTip>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock Text="Order date:"
+                               DockPanel.Dock="Left"/>
+                        <TextBlock Text="{Binding SelectedOrder.OrderDate}"
+                               DockPanel.Dock="Right"
+                               Margin="5 0 0 0"/>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock Text="Required date:"
+                               DockPanel.Dock="Left"/>
+                        <TextBlock Text="{Binding SelectedOrder.RequiredDate}"
+                               DockPanel.Dock="Right"
+                               Margin="5 0 0 0"/>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock Text="Shipped date:"
+                               DockPanel.Dock="Left"/>
+                        <TextBlock Text="{Binding SelectedOrder.ShippedDate}"
+                               DockPanel.Dock="Right"
+                               Margin="5 0 0 0"/>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock Text="Freight:"
+                               DockPanel.Dock="Left"/>
+                        <TextBlock Text="{Binding SelectedOrder.Freight}"
+                               DockPanel.Dock="Right"
+                               Margin="5 0 0 0"/>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock Text="Ship address:"
+                               DockPanel.Dock="Left"/>
+                        <TextBlock Text="{Binding SelectedOrder.ShippAddress}"
+                               DockPanel.Dock="Right"
+                               Margin="5 0 0 0"/>
+                    </DockPanel>
+
+                </StackPanel>
+            </Grid>
+            
+        </ScrollViewer>
+        <!--#endregion-->
+
+    </Grid>
+</UserControl>

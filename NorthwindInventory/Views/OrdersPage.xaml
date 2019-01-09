@@ -1,0 +1,395 @@
+﻿<UserControl x:Class="NorthwindInventory.Views.OrdersPage"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:converter="clr-namespace:NorthwindInventory.Helpers"
+            xmlns:MetroControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+            xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             DataContext="{Binding Orders, Source={StaticResource Locator}}"
+            xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+            Dialog:DialogParticipation.Register="{Binding}"
+            mc:Ignorable="d" 
+            d:DesignHeight="450" d:DesignWidth="1600">
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        
+        <!--#region Options menu-->
+
+        <Grid>
+
+            <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Right">
+
+                <!-- Go to the beggining button-->
+                <Button Command="{Binding GoToFirstRecordsCommand}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="10 0 0 0"
+                        IsEnabled="{Binding IsPreviousButtonEnabled}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="SkipBackward"/>
+                            <TextBlock Text="First records"
+                               Margin="10 0 0 0"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+                <!-- Delete button-->
+                <Button Command="{Binding RemoveOrderCommand}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"
+                    IsEnabled="{Binding IsRemoveButtonEnabled}"
+                    Visibility="{Binding ConnectedUser.IsTheBoss, Source={StaticResource Locator}, Converter={converter:BoolToVisibilityEnumConverter}}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Delete"/>
+                            <TextBlock Text="Remove order"
+                               Margin="10 0 0 0"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+                <!-- Refresh button-->
+                <Button Command="{Binding RefreshCommand}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="10 0 0 0">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Refresh"/>
+                            <TextBlock Text="Refresh"
+                               Margin="10 0 0 0"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+            </StackPanel>
+
+        </Grid>
+
+        <!--#endregion-->
+        
+        <!--#region Orders content-->
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Text="Orders"
+                       Style="{StaticResource SubTitleTextBlock}"
+                       Margin="0 0 0 10"/>
+
+                <DataGrid Grid.Row="1"
+                    ItemsSource="{Binding Orders}"
+                      AutoGenerateColumns="False"
+                      SelectedItem="{Binding SelectedOrder}"
+                      IsReadOnly="True"
+                      Style="{DynamicResource AzureDataGrid}"
+                      GridLinesVisibility="All"
+                      HorizontalGridLinesBrush="{DynamicResource TextBrush}"
+                      VerticalGridLinesBrush="{DynamicResource TextBrush}">
+
+                    <DataGrid.Columns>
+
+
+                        <!--#region  OrderID column-->
+                        <DataGridTextColumn Binding="{Binding OrderID}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Order ID"
+                                                   Margin="0 0 0 5"/>
+                                        <TextBox Text="{Binding Orders.OrderSearch ,Source={StaticResource Locator}, 
+                                                        UpdateSourceTrigger=PropertyChanged}"
+                                                     Width="100"
+                                           MetroControls:TextBoxHelper.Watermark="Search ID">
+
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="KeyUp">
+                                                    <i:InvokeCommandAction Command="{Binding Orders.SearchCommand, Source={StaticResource Locator}}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+
+                                        </TextBox>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region CustomerID column-->
+                            <DataGridTextColumn Binding="{Binding CustomerID}">
+                                <DataGridTextColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="Customer ID"
+                                                   Margin="0 0 0 5"/>
+                                        <TextBox Text="{Binding Orders.CustomerIDSearch ,Source={StaticResource Locator}, 
+                                                        UpdateSourceTrigger=PropertyChanged}"
+                                                     Width="100"
+                                           MetroControls:TextBoxHelper.Watermark="Search ID">
+
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="KeyUp">
+                                                    <i:InvokeCommandAction Command="{Binding Orders.SearchCustomerIDCommand, Source={StaticResource Locator}}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+
+                                        </TextBox>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTextColumn.HeaderTemplate>
+                            </DataGridTextColumn>
+                        <!--#endregion-->
+                        
+                        <!--#region  Customer company-->
+                        <DataGridTextColumn Binding="{Binding CustomerCompany}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Customer company"
+                                                   Margin="0 0 0 5"/>
+                                        <TextBox Text="{Binding CustomerCompanySearch}"
+                                           MetroControls:TextBoxHelper.Watermark="Search company"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region EmployeeID column-->
+                        <DataGridTextColumn Binding="{Binding EmployeeID}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Employee ID"
+                                                  
+ Margin="0 0 0 5"/>
+                                        <TextBox Text="{Binding EmployeeIDSearch}"
+                                                     Width="100"
+                                           MetroControls:TextBoxHelper.Watermark="Search ID"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region EmployeeName column-->
+                        <DataGridTextColumn Binding="{Binding EmployeeName}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Employee Name"
+                                                   Margin="0 0 0 5"/>
+                                        <TextBox Text="{Binding EmployeeNameSearch}"
+                                                     Width="110"
+                                           MetroControls:TextBoxHelper.Watermark="Search employee"/>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region ShipperID column-->
+                        <DataGridTextColumn Binding="{Binding ShipperID}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Shipper ID"
+                                                   Margin="0 0 0 5"/>
+                                        <TextBox Text="{Binding ShipperIDSearch}"
+                                                     Width="100"
+                                           MetroControls:TextBoxHelper.Watermark="Search ID"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region ShipperCompany
+ column-->
+                        <DataGridTextColumn Binding="{Binding ShipperCompany}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Shipper company"
+                                                   Margin="0 0 0 5"/>
+                                        <TextBox Text="{Binding ShipperCompanySearch}"
+                                                     Width="120"
+                                           MetroControls:TextBoxHelper.Watermark="Search company"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region OrderDate column-->
+                        <DataGridTextColumn Binding="{Binding OrderDate}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Order date"
+                                                   Margin="0 0 0 5"/>
+                                        <MetroControls:DateTimePicker SelectedDate="{Binding OrderDateSearch}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region RequiredDate column-->
+                        <DataGridTextColumn Binding="{Binding RequiredDate}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Required date"
+                                                   Margin="0 0 0 5"/>
+                                        <MetroControls:DateTimePicker SelectedDate="{Binding Requi
+redDateSearch}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region ShippedDate column-->
+                        <DataGridTextColumn Binding="{Binding ShippedDate}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Shipped date"
+                                                   Margin="0 0 0 5"/>
+                                        <MetroControls:DateTimePicker SelectedDate="{Binding ShippedDateSearch}"/>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region Freight column-->
+                        <DataGridTextColumn Binding="{Binding Freight}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Freight"
+                                                   Margin="0 0 0 5"/>
+                                        <TextBox Text="{Binding FreightSearch}"
+                                                     Width="120"
+                                           MetroControls:TextBoxHelper.Watermark="Search freight"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+                        <!--#region Address column-->
+                        <DataGridTextColumn Binding="{Binding ShippAddress}">
+                            <DataGridTextColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Ship address"
+                                                   Margin="0 0 0 5"/>
+                                        <TextBox Text="{Binding ShippAddressSearch}"
+                                                     Width="120"
+                                           MetroControls:TextBoxHelper.Watermark="Search address"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTextColumn.HeaderTemplate>
+                        </DataGridTextColumn>
+                        <!--#endregion-->
+
+
+                    </DataGrid.Columns>
+                    
+                    
+                </DataGrid>
+                
+            </Grid>
+            
+            <Grid Grid.Row="1">
+                
+                <Button Command="{Binding GetPreviousRecordsCommand}"
+                    IsEnabled="{Binding IsPreviousButtonEnabled}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="10"
+                    MetroControls:ControlsHelper.CornerRadius="15">
+
+                    <Button.Content>
+                        <iconPacks:PackIconMaterial Kind="SkipPrevious"
+                                                Margin="5"/>
+                    </Button.Content>
+
+                </Button>
+
+                <Button Command="{Binding GetNextRecordsCommand}"
+                    IsEnabled="{Binding IsNextButtonEnabled}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="10"
+                    MetroControls:ControlsHelper.CornerRadius="15">
+
+                    <Button.Content>
+                        <iconPacks:PackIconMaterial Kind="SkipNext"
+                                                Margin="5"/>
+                    </Button.Content>
+
+
+                </Button>
+            </Grid>
+
+        </Grid>
+        
+        <!--#endregion-->
+        
+        <!--#region Order details -->
+
+        <DockPanel Grid.Row="2"
+                   Margin="0 20 0 0">
+
+            <TextBlock Text="Details about the selected order"
+                       Style="{StaticResource SubTitleTextBlock}"
+                       DockPanel.Dock="Top"
+                       Margin="0 0 0 10"/>
+
+            <DataGrid ItemsSource="{Binding OrderDetails}"
+                      AutoGenerateColumns="True"
+                      SelectedItem="{Binding SelectedOrder}"
+                      IsReadOnly="True"
+                      Style="{DynamicResource AzureDataGrid}"
+                      GridLinesVisibility="All"
+                      HorizontalGridLinesBrush="{DynamicResource TextBrush}"
+                      VerticalGridLinesBrush="{DynamicResource TextBrush}"
+                      DockPanel.Dock="Bottom"/>
+
+        </DockPanel>
+
+        <!--#endregion-->
+        
+    </Grid>
+</UserControl>

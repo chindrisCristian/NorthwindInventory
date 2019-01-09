@@ -1,0 +1,383 @@
+﻿<UserControl x:Class="NorthwindInventory.Views.ConnectedUserPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NorthwindInventory.Views"
+             xmlns:convert="clr-namespace:NorthwindInventory.Helpers"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             DataContext="{Binding ConnectedUser, Source={StaticResource Locator}}"
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             Dialog:DialogParticipation.Register="{Binding}">
+
+    <ScrollViewer Margin="10"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto">
+
+        <DockPanel>
+            
+            <!--#region Picture and details about the employee-->
+
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--#region Picture and name-->
+
+                <StackPanel Orientation="Vertical">
+
+                    <!--#region Picture-->
+
+                    <Image Source="{Binding ConnectedEmployee.Photo}"
+                       Height="200"
+                       Width="200"
+                       HorizontalAlignment="Left"/>
+
+                    <Button Content="Change Image"
+                            Command="{Binding ChangeImageCommand}"
+                            HorizontalAlignment="Left"
+                            Margin="10"/>
+
+                    <StackPanel Orientation="Horizontal"
+                            Margin="5">
+
+                        <TextBlock Text="Image path: "/>
+                        <TextBlock Margin="5 0 0 0">
+                        <Hyperlink NavigateUri="{Binding ConnectedEmployee.PhotoPath}">
+                            Check link!
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="RequestNavigate">
+                                    <i:InvokeCommandAction Command="{Binding NavigateToUriCommand}"/>
+
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <!--#endregion-->
+
+                    <!--#region Name-->
+
+                    <StackPanel Orientation="Vertical"
+                                Visibility="{Binding IsFullNameVisible, Converter={convert:BoolToVisibilityEnumConverter}}">
+                        
+                        <TextBlock Text="{Binding ConnectedEmployee.FullName}"/>
+
+                        <StackPanel Orientation="Horizontal"
+                                Margin="0 10 0 0">
+                            <TextBlock Text="Username:"
+                                   Margin="0 0 5 0"/>
+                            <TextBlock Text="{Binding ConnectedEmployee.UserName}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <DockPanel Visibility="{Binding IsNameModifierVisible, Converter={convert:BoolToVisibilityEnumConverter}}">
+
+                        <DockPanel.Resources>
+
+                            <Style TargetType="{x:Type TextBox}">
+                                <Setter Property="Width" Value="100"/>
+                                <Setter Property="Margin" Value="5 0 0 0"/>
+                            </Style>
+
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Setter Property="Orientation" Value="Horizontal"/>
+                                <Setter Property="DockPanel.Dock" Value="Top"/>
+                                <Setter Property="Margin" Value="0 10 0 0"/>
+                            </Style>
+
+                        </DockPanel.Resources>
+
+                        <StackPanel>
+                            <TextBlock Text="Title of courtesy:"/>
+                            <TextBox Text="{Binding ConnectedEmployee.TitleOfCourtesy}"/>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="First name:"/>
+                            <TextBox Text="{Binding ConnectedEmployee.FirstName}"/>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="Last name:"/>
+                            <TextBox Text="{Binding ConnectedEmployee.LastName}"/>
+                        </StackPanel>
+
+                    </DockPanel>
+
+                    <Button Margin="0 10 0 0"
+                        Command="{Binding ModifyNameCommand}"
+                        Visibility="{Binding IsFullNameVisible, Converter={convert:BoolToVisibilityEnumConverter}}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="AppPlus"
+                                                      Width="20"
+                                                      Height="20"
+                                                      />
+                                <TextBlock Text="Modify"
+                                       Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </Button.Content>
+
+                    </Button>
+
+                    <Button Margin="0 10 0 0"
+                        Command="{Binding SaveNameCommand}"
+                        Visibility="{Binding IsNameModifierVisible, Converter={convert:BoolToVisibilityEnumConverter}}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="Save"
+                                                      Width="20"
+                                                      Height="20"
+                                                      />
+                                <TextBlock Text="Save"
+                                       Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </Button.Content>
+
+                    </Button>
+
+                    <!--#endregion-->
+
+                </StackPanel>
+
+                <!--#endregion-->
+
+                <!--#region Details about the employee-->
+
+                <StackPanel Grid.Column="1"
+                        Orientation="Vertical"
+                        Margin="20">
+
+                    <!--#region Address-->
+
+                    <StackPanel Orientation="Vertical">
+
+                        <TextBlock Text="Address"
+                               Style="{StaticResource SubTitleTextBlock}"/>
+
+                        <TextBlock Text="{Binding ConnectedEmployee.FullAddress}"
+                               Visibility="{Binding IsFullAddressVisible, Converter={convert:BoolToVisibilityEnumConverter}}"
+                               Margin="0 10 0 0"/>
+
+                        <DockPanel Visibility="{Binding IsAddressModifierVisible, Converter={convert:BoolToVisibilityEnumConverter}}">
+
+                            <DockPanel.Resources>
+                                <Style TargetType="{x:Type StackPanel}">
+                                    <Setter Property="Orientation" Value="Horizontal"/>
+                                    <Setter Property="Margin" Value="0 10 0 0"/>
+                                    <Setter Property="DockPanel.Dock" Value="Top"/>
+                                </Style>
+
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="Margin" Value="5 0 0 0"/>
+                                    <Setter Property="MinWidth" Value="100" />
+                                </Style>
+                            </DockPanel.Resources>
+
+                            <StackPanel>
+                                <TextBlock Text="Address:"/>
+                                <TextBox Text="{Binding ConnectedEmployee.Address}"/>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="City:"/>
+                                <TextBox Text="{Binding ConnectedEmployee.City}"/>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="Postal code:"/>
+                                <TextBox Text="{Binding ConnectedEmployee.PostalCode}"/>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="Country:"/>
+                                <TextBox Text="{Binding ConnectedEmployee.Country}"/>
+                            </StackPanel>
+
+                        </DockPanel>
+
+                        <Button Margin="0 10 0 0"
+                        Command="{Binding ModifyAddressCommand}"
+                        Visibility="{Binding IsFullAddressVisible, Converter={convert:BoolToVisibilityEnumConverter}}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconModern Kind="AppPlus"
+                                                      Width="20"
+                                                      Height="20"
+                                                      />
+                                    <TextBlock Text="Modify"
+                                       Margin="5 0 0 0"/>
+                                </StackPanel>
+                            </Button.Content>
+
+                        </Button>
+
+                        <Button Margin="0 10 0 0"
+                        Command="{Binding SaveAddressCommand}"
+                        Visibility="{Binding IsAddressModifierVisible, Converter={convert:BoolToVisibilityEnumConverter}}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconModern Kind="Save"
+                                                      Width="20"
+                                                      Height="20"
+                                                      />
+                                    <TextBlock Text="Save"
+                                       Margin="5 0 0 0"/>
+                                </StackPanel>
+                            </Button.Content>
+
+                        </Button>
+
+                    </StackPanel>
+
+                    <!--#endregion-->
+
+                    <Separator />
+
+                    <!--#region Other details-->
+
+                    <StackPanel Orientation="Vertical"
+                            Margin="0 50 0 0">
+
+                        <TextBlock Text="Other details:"
+                               Style="{StaticResource SubTitleTextBlock}"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Phone: "/>
+                            <TextBox Text="{Binding ConnectedEmployee.HomePhone}"
+                                           Margin="5 0 0 0"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal"
+                                Margin="0 10 0 0">
+                            <TextBlock Text="Birth date: "/>
+                            <DatePicker Text="{Binding ConnectedEmployee.BirthDate}"
+                                           Margin="5 0 0 0"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal"
+                                Margin="0 10 0 0">
+                            <TextBlock Text="Hire date: "/>
+                            <DatePicker Text="{Binding ConnectedEmployee.HireDate}"
+                                           Margin="5 0 0 0"/>
+                        </StackPanel>
+
+                        <Button Margin="0 10 0 0"
+                        Command="{Binding SaveOtherDetailsCommand}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <iconPacks:PackIconModern Kind="Save"
+                                                      Width="20"
+                                                      Height="20"
+                                                      />
+                                    <TextBlock Text="Save"
+                                       Margin="5 0 0 0"/>
+                                </StackPanel>
+                            </Button.Content>
+
+                        </Button>
+
+                    </StackPanel>
+
+                    <!--#endregion-->
+
+                    <Separator />
+                    
+                    <!--#region  Password changing-->
+
+                    <Button Margin="0 10 0 0"
+                        Command="{Binding ChangePasswordCommand}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconModern Kind="InterfacePassword"
+                                                      Width="20"
+                                                      Height="20"
+                                                      />
+                                <TextBlock Text="Change password"
+                                       Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </Button.Content>
+
+                    </Button>
+
+                    <!--#endregion-->
+
+                </StackPanel>
+
+                <!--#endregion-->
+
+            </Grid>
+
+            <!--#endregion-->
+
+            <Separator DockPanel.Dock="Top"
+                       Margin="10"/>
+            
+            <!--#region Orders history-->
+
+            <TextBlock Style="{StaticResource SubTitleTextBlock}"
+                       Text="Orders history"
+                       DockPanel.Dock="Top"/>
+
+            <DataGrid ItemsSource="{Binding OrdersHistory}"
+                      DockPanel.Dock="Bottom"
+                      Margin="10"
+                      IsReadOnly="True"
+                      AutoGenerateColumns="False">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Order ID"
+                                        Binding="{Binding OrderID}"/>
+                    <DataGridTextColumn Header="Customer ID"
+                                        Binding="{Binding CustomerID}"/>
+                    <DataGridTextColumn Header="Customer company"
+                                        Binding="{Binding CustomerCompany}"/>
+                    <DataGridTextColumn Header="Shipper company"
+                                        Binding="{Binding ShipperCompany}"/>
+                    <DataGridTextColumn Header="Order date"
+                                        Binding="{Binding OrderDate}"/>
+                    <DataGridTextColumn Header="Required date"
+                                        Binding="{Binding RequiredDate}"/>
+                    <DataGridTextColumn Header="Shipped date"
+                                        Binding="{Binding ShippedDate}"/>
+                    <DataGridTextColumn Header="Freight"
+                                        Binding="{Binding Freight}"/>
+                    <DataGridTextColumn Header="Ship address"
+                                        Binding="{Binding ShippAddress}"/>
+                </DataGrid.Columns>
+                
+            </DataGrid>
+
+            <!--#endregion-->
+
+        </DockPanel>
+
+
+    </ScrollViewer>
+
+</UserControl>

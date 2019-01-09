@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="NorthwindInventory.Views.CustomerOptionsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:converter="clr-namespace:NorthwindInventory.Helpers"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding Customers, Source={StaticResource Locator}}">
+
+    <Grid>
+
+        <StackPanel Orientation="Horizontal"
+                Margin="20"
+                HorizontalAlignment="Right">
+
+            <!-- Delete button-->
+            <Button Command="{Binding RemoveCustomerCommand}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"
+                    IsEnabled="{Binding IsRemoveButtonEnabled}"
+                    Visibility="{Binding ConnectedUser.IsTheBoss, Source={StaticResource Locator}, Converter={converter:BoolToVisibilityEnumConverter}}">
+
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="Delete"/>
+                        <TextBlock Text="Remove customer"
+                               Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button.Content>
+
+            </Button>
+
+            <!-- Refresh button-->
+            <Button Command="{Binding RefreshCommand}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                Margin="10 0 0 0">
+
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="Refresh"/>
+                        <TextBlock Text="Refresh"
+                               Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button.Content>
+
+            </Button>
+
+            <!-- Search textbox-->
+            <TextBox HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Margin="10 0 0 0"
+                 MinWidth="200"
+                 Text="{Binding CustomerSearch, UpdateSourceTrigger=PropertyChanged}"
+                     ToolTip="Search for the company's name. ( Case sensitive )">
+
+                <controls:TextBoxHelper.Watermark>
+                    Search
+                </controls:TextBoxHelper.Watermark>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="KeyUp">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+            </TextBox>
+
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

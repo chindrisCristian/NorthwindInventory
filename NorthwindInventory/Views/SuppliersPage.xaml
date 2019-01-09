@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="NorthwindInventory.Views.SuppliersPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NorthwindInventory.Views"
+             xmlns:convert="clr-namespace:NorthwindInventory.Helpers"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding Suppliers, Source={StaticResource Locator}}"
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             Dialog:DialogParticipation.Register="{Binding}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="7*" />
+        </Grid.RowDefinitions>
+
+        <!--#region Options for this page -->
+        
+        <Frame Content="{Binding Options, Converter={convert:EnumToUserControlConverter}}" />
+
+        <!--#endregion-->
+        
+        <!--#region Suppliers main content-->
+        
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!--#region Suppliers data grid-->
+
+            <DockPanel Margin="5"
+                        Grid.Column="0">
+
+                <TextBlock Text="Suppliers" 
+                           Style="{StaticResource TitleTextBlock}"
+                           Margin="20"
+                           DockPanel.Dock="Top"/>
+
+                <DataGrid ItemsSource="{Binding Path=Suppliers}"
+                      AutoGenerateColumns="False"
+                      AlternatingRowBackground="Crimson"
+                      Style="{StaticResource AzureDataGrid}"
+                      SelectedItem="{Binding SelectedSupplier}"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="{DynamicResource TextBrush}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID"
+                                        Binding="{Binding SupplierID}"
+                                            IsReadOnly="True" />
+                        <DataGridTextColumn Header="Company Name"
+                                        Binding="{Binding CompanyName}"/>
+                        <DataGridTextColumn Header="Contact Name"
+                                        Binding="{Binding ContactName}"/>
+                        <DataGridTextColumn Header="Contact title"
+                                        Binding="{Binding ContactTitle}"/>
+                        <DataGridTextColumn Header="Address"
+                                        Binding="{Binding Address}"/>
+                        <DataGridTextColumn Header="City"
+                                        Binding="{Binding City}"/>
+                        <DataGridTextColumn Header="Region"
+                                        Binding="{Binding Region}"/>
+                        <DataGridTextColumn Header="Country"
+                                        Binding="{Binding Country}"/>
+                        <DataGridTextColumn Header="Phone"
+                                        Binding="{Binding Phone}"/>
+                        <DataGridTextColumn Header="Fax"
+                                        Binding="{Binding Fax}"/>
+                        <DataGridTextColumn Header="Home page"
+                                        Binding="{Binding HomePage}"/>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+                
+            </DockPanel>
+
+            <!--#endregion-->
+            
+            
+            <!--#region Products from each supplier-->
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="1"
+                        Margin="5">
+
+                <TextBlock Text="Products" 
+                           Style="{StaticResource TitleTextBlock}"
+                           Margin="20"/>
+
+                <DataGrid ItemsSource="{Binding ProductsPerSupplier}"
+                      AutoGenerateColumns="False"
+                          Style="{DynamicResource AzureDataGrid}"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="{DynamicResource TextBrush}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product Name"
+                                        Binding="{Binding ProductName}"/>
+                        <DataGridTextColumn Header="Category"
+                                        Binding="{Binding Category.CategoryName}"/>
+                        <DataGridTextColumn Header="Quantity per unit"
+                                        Binding="{Binding QuantityPerUnit}"/>
+                        <DataGridTextColumn Header="Unit price"
+                                        Binding="{Binding UnitPrice}"/>
+                        <DataGridTextColumn Header="Units in stock"
+                                        Binding="{Binding UnitsInStock}"/>
+                        <DataGridTextColumn Header="Units on order"
+                                        Binding="{Binding UnitsOnOrder}"/>
+                        <DataGridTextColumn Header="Reorder level"
+                                        Binding="{Binding ReorderLevel}"/>
+                    </DataGrid.Columns>
+
+                </DataGrid>
+                
+            </StackPanel>
+            <!--#endregion-->
+            
+        </Grid>
+        
+        <!--#endregion-->
+        
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,182 @@
+﻿<UserControl x:Class="NorthwindInventory.Views.NavigationPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NorthwindInventory.Views"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding Navigation, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+
+        <Style TargetType="iconPacks:PackIconOcticons">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="0 0 10 0"/>
+        </Style>
+
+        <Style TargetType="iconPacks:PackIconFontAwesome">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="0 0 10 0"/>
+        </Style>
+
+        <Style TargetType="iconPacks:PackIconMaterial">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="0 0 10 0"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+
+    </UserControl.Resources>
+
+    <ScrollViewer Margin="10"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto">
+        
+        <DockPanel>
+
+            <StackPanel Orientation="Vertical"
+                HorizontalAlignment="Center"
+                Margin="10"
+                Width="200"
+                    DockPanel.Dock="Top">
+
+                <Button Margin="10 0 10 10"
+                Command="{Binding GoToMainPageCommand}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconOcticons Kind="Home"/>
+                            <TextBlock Text="{Binding MainPage}"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+                <Button Margin="10 0 10 10"
+                Command="{Binding GoToProductsPageCommand}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome Kind="BoxesSolid"/>
+                            <TextBlock Text="{Binding ProductsPage}"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+                <Button Margin="10 0 10 10"
+                Command="{Binding GoToOrdersPageCommand}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome Kind="CartArrowDownSolid"/>
+                            <TextBlock Text="{Binding OrdersPage}"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+                <Button Margin="10 0 10 10"
+                Command="{Binding GoToCustomersPageCommand}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome Kind="PeopleCarrySolid"/>
+                            <TextBlock Text="{Binding CustomersPage}"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+                <Button Margin="10 0 10 10"
+                Command="{Binding GoToSuppliersPageCommand}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome Kind="TruckLoadingSolid"/>
+                            <TextBlock Text="{Binding SuppliersPage}"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+                <Button Margin="10 0 10 10"
+                Command="{Binding GoToShippersPageCommand}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome Kind="ShippingFastSolid"/>
+                            <TextBlock Text="{Binding ShippersPage}"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+                <Separator/>
+
+                <Button Margin="10"
+                Command="{Binding GoToReportsPageCommand}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome Kind="PaperclipSolid"/>
+                            <TextBlock Text="{Binding ReportsPage}"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+            </StackPanel>
+
+
+            <StackPanel Orientation="Vertical"
+                HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    DockPanel.Dock="Bottom"
+                    Width="200"
+                    Margin="0 0 0 50">
+
+                <Button Margin="10 0 10 10"
+                Command="{Binding GoToConnectedUserPageCommand}"
+                    VerticalAlignment="Bottom">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding ConnectedUserImage}"
+                               Width="30"
+                               Height="30"/>
+                            <TextBlock Text="{Binding ConnectedUserPage}"
+                                   Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+                <Separator/>
+
+                <Button Margin="10 0 10 10"
+                Command="{Binding GoToSettingsPageCommand}"
+                    VerticalAlignment="Bottom">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="SettingsBox"/>
+                            <TextBlock Text="{Binding SettingsPage}"/>
+                        </StackPanel>
+                    </Button.Content>
+
+                </Button>
+
+            </StackPanel>
+
+        </DockPanel>
+    </ScrollViewer>
+</UserControl>

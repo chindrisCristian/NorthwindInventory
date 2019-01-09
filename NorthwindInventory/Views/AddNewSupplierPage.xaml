@@ -1,0 +1,186 @@
+﻿<UserControl x:Class="NorthwindInventory.Views.AddNewSupplierPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding AddNewSupplier, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Width" Value="120"/>
+        </Style>
+
+        <Style TargetType="{x:Type StackPanel}" x:Key="AddNewSupplierSP">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="Margin" Value="10 10 0 0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+    </UserControl.Resources>
+    
+    
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        
+        <!--#region Title and return button-->
+
+        <!-- Return button-->
+        <Button Command="{Binding ReturnCommand}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="10">
+
+            <StackPanel Orientation="Horizontal">
+                <iconPacks:PackIconModern Kind="Return"
+                                              Height="25"
+                                              Width="25"/>
+
+                <TextBlock Text="Return"
+                               Margin="10 0 0 0"
+                               FontSize="15"/>
+            </StackPanel>
+
+        </Button>
+
+        <!-- Title-->
+        <TextBlock Text="Add new supplier"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                   Style="{StaticResource TitleTextBlock}"/>
+
+
+        <!--#endregion-->
+        
+        
+        <!--#region Main content-->
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Auto">
+
+            <StackPanel Orientation="Vertical">
+
+                <!-- Company name-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding CompanyNameLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding CompanyName}"
+                             Controls:TextBoxHelper.Watermark="{Binding CompanyNameWatermark}"/>
+
+                </StackPanel>
+
+                <!-- Contact name-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding ContactNameLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding ContactName}"
+                             Controls:TextBoxHelper.Watermark="{Binding ContactNameWatermark}"/>
+
+                </StackPanel>
+
+                <!-- Contact title-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding ContactTitleLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding ContactTitle}"
+                             Controls:TextBoxHelper.Watermark="{Binding ContactTitleWatermark}"/>
+
+                </StackPanel>
+
+                <!-- Address-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding AddressLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding Address}"
+                             Controls:TextBoxHelper.Watermark="{Binding AddressWatermark}"/>
+
+                </StackPanel>
+
+                <!-- City-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding CityLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding City}"
+                             Controls:TextBoxHelper.Watermark="{Binding CityWatermark}"/>
+
+                </StackPanel>
+
+                <!-- Region-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding RegionLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding Region}"
+                             Controls:TextBoxHelper.Watermark="{Binding RegionWatermark}"/>
+
+                </StackPanel>
+
+                <!-- Postal code-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding PostalCodeLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding PostalCode}"
+                             Controls:TextBoxHelper.Watermark="{Binding PostalCodeWatermark}"/>
+
+                </StackPanel>
+
+                <!-- Country-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding CountryLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding Country}"
+                             Controls:TextBoxHelper.Watermark="{Binding CountryWatermark}"/>
+
+                </StackPanel>
+
+                <!-- Phone-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding PhoneLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding Phone}"
+                             Controls:TextBoxHelper.Watermark="{Binding PhoneWatermark}"/>
+
+                </StackPanel>
+
+                <!-- Fax-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding FaxLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding Fax}"
+                             Controls:TextBoxHelper.Watermark="{Binding FaxWatermark}"/>
+
+                </StackPanel>
+
+                <!-- Home page-->
+                <StackPanel Style="{StaticResource AddNewSupplierSP}">
+                    <Label Content="{Binding HomePageLabel}"/>
+                    <TextBox Width="300"
+                             Text="{Binding HomePage}"
+                             Controls:TextBoxHelper.Watermark="{Binding HomePageWatermark}"/>
+
+                </StackPanel>
+
+                <Button Command="{Binding SaveCommand}"
+                        Content="Save"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Margin="20"
+                        FontSize="15"
+                        Padding="20 10"/>
+
+            </StackPanel>
+
+        </ScrollViewer>
+        
+        <!--#endregion-->
+        
+    </Grid>
+    
+</UserControl>
