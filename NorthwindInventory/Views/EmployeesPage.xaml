@@ -4,35 +4,47 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NorthwindInventory.Views"
+             xmlns:convert="clr-namespace:NorthwindInventory.Helpers"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding Employees, Source={StaticResource Locator}}">
     
-    <ScrollViewer Margin="20">
+    <ScrollViewer Margin="20"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
 
-        <ListView ItemsSource="{Binding Employees}">
+        <ItemsControl ItemsSource="{Binding Employees}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel ItemHeight="Auto"
+                               ItemWidth="400"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Image">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding Photo}"
-                                       Width="200"
-                                       Height="200"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Full name"
-                                    DisplayMemberBinding="{Binding FullName}"/>
-                    <GridViewColumn Header="Username"
-                                    DisplayMemberBinding="{Binding UserName}"/>
-                    <GridViewColumn Header="Password"
-                                    DisplayMemberBinding="{Binding Password}"/>
-                </GridView>
-            </ListView.View>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+
+                    <Button Command="{Binding }" 
+                            Margin="10"
+                            Controls:ButtonHelper.CornerRadius="10">
+
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="{Binding Photo}"
+                                   Width="200"
+                                   Height="200"/>
+                            <TextBlock Text="{Binding FullName}"
+                                       Margin="10"/>
+                        </StackPanel>
+                        
+                    </Button>
+                    
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
             
-        </ListView>        
-        
+        </ItemsControl>
+
     </ScrollViewer>
 </UserControl>

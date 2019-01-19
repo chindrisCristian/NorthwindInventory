@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="ViewModel\AddNewSupplierViewModel.cs" />
     <Compile Include="ViewModel\EmployeesViewModel.cs" />
+    <Compile Include="ViewModel\UtilityViewModel.cs" />
     <Compile Include="ViewModel\OrdersViewModel.cs" />
     <Compile Include="ViewModel\ProductsViewModel.cs" />
     <Compile Include="ViewModel\ReportsViewModel.cs" />
@@ -127,6 +128,9 @@
     </Compile>
     <Compile Include="Views\FirstPage.xaml.cs">
       <DependentUpon>FirstPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UtilityWindow.xaml.cs">
+      <DependentUpon>UtilityWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NavigationPage.xaml.cs">
       <DependentUpon>NavigationPage.xaml</DependentUpon>
@@ -215,6 +219,10 @@
     <Page Include="Views\FirstPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UtilityWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\NavigationPage.xaml">
       <SubType>Designer</SubType>

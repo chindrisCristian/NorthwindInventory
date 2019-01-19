@@ -1,0 +1,46 @@
+﻿<Controls:MetroWindow x:Class="NorthwindInventory.Views.UtilityWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:convert="clr-namespace:NorthwindInventory.Helpers"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      mc:Ignorable="d"
+                      Title="{Binding Title}"
+                      Icon="..\Images\Logo.png"
+                      Height="1000"
+                      Width="1500"
+                      MinHeight="{Binding MinHeight}"
+                      MinWidth="{Binding MinWidth}"
+                      DataContext="{Binding Utility, Source={StaticResource Locator}}"
+                      IconOverlayBehavior="Never"
+                      LeftWindowCommandsOverlayBehavior="Never"
+                      WindowStartupLocation="CenterScreen"
+                      xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      Dialog:DialogParticipation.Register="{Binding}">
+
+    
+
+
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <ToggleButton Command="{Binding ReturnCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconOcticons Kind="ArrowLeft"
+                                  Width="25"
+                                  Height="25"/>
+                    <TextBlock Text="Previous page"
+                               FontWeight="Bold"
+                               Margin="5 0 0 0"/>
+                </StackPanel>
+            </ToggleButton>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+
+
+    <Frame Content="{Binding MainContent, Converter={convert:EnumToUserControlConverter}}"
+           NavigationUIVisibility="Hidden"/>
+
+</Controls:MetroWindow>
