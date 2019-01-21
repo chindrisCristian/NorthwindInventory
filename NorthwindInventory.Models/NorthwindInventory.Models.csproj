@@ -81,6 +81,7 @@
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\OrderDetailModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\ShowStocksReportModel.cs" />
     <Compile Include="Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -100,6 +101,7 @@
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\OrderService.cs" />
+    <Compile Include="Services\ReportsService.cs" />
     <Compile Include="Services\ShipperService.cs" />
     <Compile Include="Services\SupplierService.cs" />
     <Compile Include="Shipper.cs">

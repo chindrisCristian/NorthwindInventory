@@ -44,6 +44,8 @@ namespace NorthwindInventory.Helpers
 					return new ReportsPage();
 				case PageType.EmployeesPage:
 					return new EmployeesPage();
+				case PageType.ReportShowStock:
+					return new ReportShowStockPage();
 				default:
 					return null;
 			}

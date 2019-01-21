@@ -4,9 +4,51 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NorthwindInventory.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             xmlns:convert="clr-namespace:NorthwindInventory.Helpers"
+            xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+            xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+            mc:Ignorable="d"
+            Height="1000"
+            Width="1500"
+            DataContext="{Binding Reports, Source={StaticResource Locator}}">
+    
+    
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!--#region Options for reports-->
+
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+
+            <TextBlock Text="Reports"
+                       Style="{StaticResource TitleTextBlock}"
+                       Margin="20"/>
+
+            <Controls:SplitButton ItemsSource="{Binding ReportsType}"
+                                    SelectedItem="{Binding SelectedReport}"
+                                    ToolTip="Select the report type."
+                                      Icon="{iconPacks:FontAwesome Kind=NewspaperRegular}"/>
+
+            <Button Command="{Binding ShowReportCommand}"
+                    Content="Show report"
+                    Controls:ControlsHelper.CornerRadius="10"
+                    Margin="20"/>
+
+        </StackPanel>
+        
+        <!--#endregion-->
+        
+        <!--#region The content-->
+
+        <Frame Content="{Binding ContentSideFrame, Converter={convert:EnumToUserControlConverter}}"
+               Grid.Column="1"/>
+
+        <!--#endregion-->
     </Grid>
 </UserControl>

@@ -15,6 +15,7 @@
 		EmployeesPage,
 		ConnectedUserPage,
 		SettingsPage,
-		ReportsPage
+		ReportsPage,
+		ReportShowStock
 	}
 }
