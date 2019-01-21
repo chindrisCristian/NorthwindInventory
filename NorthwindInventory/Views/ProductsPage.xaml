@@ -3,10 +3,133 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:NorthwindInventory.Views"
+             xmlns:converter="clr-namespace:NorthwindInventory.Helpers"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding Products, Source={StaticResource Locator}}"
+              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             Dialog:DialogParticipation.Register="{Binding}">
     <Grid>
-            
+
+
+        <!--#region Shippers main content-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
+
+        <!--#region Shippers option-->
+
+        <Grid >
+            <StackPanel Orientation="Horizontal" 
+                HorizontalAlignment="Right">
+
+                <!-- Delete button-->
+                <Button Command="{Binding RemoveSupplierCommand}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="10 0 0 0"
+                    IsEnabled="{Binding IsRemoveButtonEnabled}"
+                    Visibility="{Binding ConnectedUser.IsTheBoss, Source={StaticResource Locator}, Converter={converter:BoolToVisibilityEnumConverter}}">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Delete"/>
+                            <TextBlock Text="Remove shipper"
+                               Margin="10 0 0 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <!-- Refresh button-->
+                <Button Command="{Binding RefreshCommand}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                Margin="10 0 0 0">
+
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Refresh"/>
+                            <TextBlock Text="Refresh"
+                               Margin="10 0 0 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <!-- Search textbox-->
+                <TextBox HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Margin="10 0 0 0"
+                 MinWidth="200"
+                 Text="{Binding Productsearch, UpdateSourceTrigger=PropertyChanged}"
+                     ToolTip="Search for the company's name. ( Case sensitive )">
+
+                    <controls:TextBoxHelper.Watermark>
+                        Search
+                    </controls:TextBoxHelper.Watermark>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyUp">
+                            <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                </TextBox>
+
+            </StackPanel>
+
+        </Grid>
+
+        <!--#endregion-->
+
+        <!--#region Products data grid-->
+
+        <DockPanel Margin="5"
+                        Grid.Row="1">
+
+            <TextBlock Text="Products" 
+                           Style="{StaticResource TitleTextBlock}"
+                           Margin="20"
+                           DockPanel.Dock="Top"/>
+
+            <DataGrid ItemsSource="{Binding Path=Products}"
+                      AutoGenerateColumns="False"
+                      AlternatingRowBackground="Crimson"
+                      Style="{StaticResource AzureDataGrid}"
+                      SelectedItem="{Binding SelectedShipper}"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="{DynamicResource TextBrush}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID"
+                                        Binding="{Binding ProductID}"
+                                            IsReadOnly="True" />
+                    <DataGridTextColumn Header="ProductNameS"
+                                        Binding="{Binding ProductName}"/>
+                    <DataGridTextColumn Header="Quantity per unit"
+                                        Binding="{Binding QuantityPerUnit}"/>
+                    <DataGridTextColumn Header="Units in stock"
+                                        Binding="{Binding UnitsInStock}"/>
+                    <DataGridTextColumn Header="Quantity on order"
+                                        Binding="{Binding UnitsOnOrder}"/>
+                    <DataGridTextColumn Header="Reorder Level"
+                                        Binding="{Binding ReorderLevel}"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </DockPanel>
+
+        <!--#endregion-->
+
+
     </Grid>
+
+    <!--#endregion-->
+
 </UserControl>
