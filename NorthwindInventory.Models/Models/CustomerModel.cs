@@ -1,30 +1,30 @@
 ﻿namespace NorthwindInventory.Models
 {
-	public class CustomerModel
-	{
-		#region Properties and fields
+    public class CustomerModel
+    {
+        #region Properties and fields
 
-		public string CustomerID { get; set; }
+        public string CustomerID { get; set; }
 
-		public string CompanyName { get; set; }
+        public string CompanyName { get; set; }
 
-		public string ContactName { get; set; }
+        public string ContactName { get; set; }
 
-		public string ContactTitle { get; set; }
+        public string ContactTitle { get; set; }
 
-		public string Address { get; set; }
+        public string Address { get; set; }
 
-		public string Phone { get; set; }
+        public string Phone { get; set; }
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public CustomerModel()
-		{
+        public CustomerModel()
+        {
 
-		}
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
